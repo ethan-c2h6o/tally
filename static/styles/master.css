@@ -1,0 +1,94 @@
+#transaction {
+    grid-template-columns: 175px auto;
+}
+
+#edit, #new_user {
+    grid-template-columns: 160px auto;
+}
+
+form {
+    width: 600px;
+    position: relative;
+}
+
+.tooltip {
+    margin: 0 0 20px 160px;
+}
+
+#user_alr_exists {
+    position: absolute;
+    top: 294px;
+    left: 100px;
+}
+
+input[type=submit] {
+    position: relative;
+    margin-left: 500px;
+    margin-bottom: 20px;
+}
+
+#transaction_submit, #txn_edit_submit, #edit_user_submit {
+    margin-top: 20px;
+}
+
+#new_user_submit {
+    margin-top: -10px;
+}
+
+#txn_delete {
+    position: absolute;
+    left: 0;
+    margin-left: 0;
+    margin-top: 20px;
+    background-color: white;
+    color: darkred;
+    width: fit-content;
+}
+
+#txn_delete:hover {
+    background-color: #ffeaea;
+}
+
+body.dark #txn_delete {
+    background-color: rgb(30, 20, 20);
+    color: rgb(195, 25, 25);
+}
+
+body.dark #txn_delete:hover {
+    background-color: rgb(25, 10, 10);
+}
+
+@media (max-width: 620px) {
+    form {
+        width: 100%;
+        margin-bottom: 80px;
+    }
+
+    #transaction, #edit, #new_user  {
+        grid-template-columns: auto;
+        row-gap: 5px;
+    }
+
+    .mobile_gap {
+        margin-top: 20px;
+    }
+
+    input[type=submit] {
+        position: absolute;
+        margin-left: 0;
+        right: 0;
+    }
+
+    #user_alr_exists {
+        top: 235px;
+        left: 0;
+    }
+
+    .tooltip {
+        margin: 0;
+    }
+
+    #new_user_submit {
+        margin-top: 0;
+    }
+}

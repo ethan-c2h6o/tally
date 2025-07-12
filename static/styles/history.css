@@ -1,0 +1,117 @@
+#main {
+    max-width: 1280px;
+}
+
+.grid_container {
+    grid-template-columns: 150px 90px auto 120px;
+    column-gap: 10px;
+    border: 1px solid rgb(196, 196, 196);
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 0 10px;
+    align-items: center;
+}
+
+.header {
+    border: none;
+    font-weight: bold;
+}
+
+.header > p {
+    margin: 0;
+}
+
+.debt {
+    background-color: rgb(240, 240, 240);
+}
+
+.repayment {
+    background-color: rgb(196, 255, 196);
+    color: darkgreen;
+    font-weight: 500;
+}
+
+.repayment > p {
+    margin: 5px 0px;
+}
+
+.desc {
+    overflow: hidden;
+    white-space: pre-wrap;
+}
+
+#search_input {
+    width: 500px;
+}
+
+#clear_button {
+    border: none;
+    border-radius: 10px;
+    background-color: #3697c1;
+    width: 100px;
+    padding: 7.5px;
+}
+
+#clear_button:hover {
+    background-color: #3188ae;
+}
+
+.hidden {
+    display: none;
+}
+
+.total_owing_desc {
+    display: none;
+}
+
+body.dark .debt {
+    background-color: rgb(30, 30, 30);
+    color: rgb(220, 220, 220);
+}
+
+body.dark .repayment {
+    background-color: rgb(25, 40, 25);
+    color: rgb(20, 150, 20);
+}
+
+@media (max-width: 800px) {
+    .grid_container {
+        grid-template-columns: auto;
+        row-gap: 0;
+    }
+
+    .header {
+        display: none;
+    }
+
+    #search_input {
+        width: calc(100% - 105px);
+        max-width: 500px;
+    }
+
+    #clear_button {
+        width: 75px;
+        padding: 5px;
+    }
+
+    .debt > p, .repayment > p {
+        margin: 5px;
+    }
+
+    .date {
+        font-weight: bold;
+    }
+
+    .amount {
+        font-weight: 600;
+    }
+
+    .total {
+        text-align: right;
+        font-style: italic;
+    }
+
+    .total_owing_desc {
+        display: inline;
+    }
+}

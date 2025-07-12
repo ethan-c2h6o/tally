@@ -1,0 +1,67 @@
+h1 { font-size: 36px; }
+
+form {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 600px;
+    margin: 100px auto;
+    padding: 20px;
+    height: 320px;
+    box-shadow: -5px 5px 10px lightgrey;
+}
+
+.grid_container {
+    grid-template-columns: 20% auto;
+}
+
+select {
+    width: 100%;
+}
+
+input[type='submit'] {
+    float: right;
+    margin-top: -10px;
+}
+
+.tooltip  {
+    position: relative;
+    left: 20%;
+    top: -16px;
+}
+
+.select_error {
+    position: relative;
+    left: 20%;
+    top: -130px;
+}
+
+p {
+    width: 480px;
+}
+
+@media (max-width: 650px) {
+    form {
+        width: 90%;
+        border: none;
+        box-shadow: none;
+        margin: 100px auto;
+        padding: 0;
+    }
+
+    .grid_container {
+        grid-template-columns: auto;
+        row-gap: 5px;
+    }
+
+    .tooltip  {
+        left: 0;
+    }
+
+    p {
+        width: 100%;
+    }
+
+    .mobile_gap {
+        margin-top: 20px;
+    }
+}

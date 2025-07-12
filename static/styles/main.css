@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+body {
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    margin: 0;
+    font-size: 20px;
+}
+
+#main {
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box
+}
+
+select, input {
+    font-size: 20px;
+    padding: 10px;
+}
+
+select {
+    cursor: pointer;
+}
+
+input[type=date] {
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+input[type='submit'] {
+    border: none;
+    border-radius: 10px;
+    background-color: #3697c1;
+    width: 100px;
+}
+
+input[type='submit']:hover {
+    background-color: #3188ae;
+    cursor: pointer;
+}
+
+textarea {
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    padding: 10px;
+}
+
+button {
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.grid_container {
+    display: grid;
+    row-gap: 30px;
+}
+
+label {
+    align-content: center;
+}
+
+.tooltip {
+    font-size: 16px;
+    font-style: italic;
+}
+
+.error {
+    color: darkred;
+}
+
+.success {
+    color: darkgreen;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    background-color: #3697c1;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    box-shadow: 0 -25px 20px 20px black;
+}
+
+nav > a {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    height: 20px;
+    margin-right: 5px;
+}
+
+#active_page .icon {
+    fill: white;
+}
+
+nav > a > img {
+    height: 60px;
+    display: inline-block;
+}
+
+nav > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+}
+
+nav > ul > li {
+    float: left;
+}
+
+#log_out_btn {
+    float: right;
+}
+
+nav > ul > li > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    line-height: 60px;
+    text-decoration: none;
+    color: black;
+    align-items: center;
+}
+
+nav > ul > li > a:hover {
+    background-color: #3188ae;
+}
+
+#active_page > a {
+    background-color: #174051;
+    color: white;
+}
+
+.nav_toggle, .burger {
+    display: none;
+}
+
+body.dark {
+    background-color: rgb(20, 20, 20);
+    color: rgb(220, 220, 220);
+}
+
+body.dark input[type=text],
+body.dark input[type=password],
+body.dark input[type=number],
+body.dark input[type=date],
+body.dark button,
+body.dark textarea,
+body.dark select {
+    background-color: rgb(30, 30, 30);
+    border: 1px solid darkgrey;
+    border-radius: 2px;
+    color: rgb(220, 220, 220);
+    padding: 11px;
+}
+
+body.dark button {
+    padding-top: 0;
+    padding-bottom: 0;
+    color: black;
+}
+
+body.dark .error {
+    color: rgb(195, 25, 25);
+}
+
+body.dark .success {
+    color: rgb(20, 150, 20);
+}
+
+@media (max-width: 660px) {
+    h1 {
+        font-size: 30px;
+    }
+    
+    nav {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    nav > ul > li, #log_out_btn {
+        float: none;
+    }
+
+    nav > ul {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 150px;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    nav > ul > li > a {
+        background-color: white;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    .burger {
+        width: 60px;
+        height: 60px;
+        cursor: pointer;
+    }
+
+    .burger > div {
+        width: 50px;
+        height: 8px;
+        background-color: rgb(30, 30, 30);
+        border-radius: 4px;
+        margin: 8px 5px;
+    }
+
+    .shader {
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        background-color: black;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .nav_toggle:checked + .burger {
+        z-index: 1;
+    }
+
+    .nav_toggle:checked + .burger + ul {
+        flex-direction: column;
+        max-height: 240px;
+        transition: max-height 0.2s;
+        z-index: 1;
+    }
+
+    .nav_toggle:checked + .burger + ul + .shader {
+        /*Might change/delete this later, we'll see*/
+        visibility: visible;
+        opacity: 0.1;
+        transition: opacity 0.2s;
+    }
+}

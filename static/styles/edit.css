@@ -1,0 +1,31 @@
+.debt, .repayment {
+    text-align: left;
+    width: 100%;
+}
+
+.debt:hover {
+    background-color: rgb(225, 225, 225);
+}
+
+.repayment:hover {
+    background-color: rgb(169, 244, 169);
+}
+
+body.dark .debt:hover {
+    background-color: rgb(15, 15, 15);
+}
+
+body.dark .repayment {
+    background-color: rgb(25, 40, 25);
+    color: rgb(20, 150, 20);
+}
+
+body.dark .repayment:hover {
+    background-color: rgb(13, 20, 13);
+}
+
+@media (max-width: 800px) {
+    button {
+        width: 100%;
+    }
+}

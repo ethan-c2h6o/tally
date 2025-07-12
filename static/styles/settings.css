@@ -1,0 +1,156 @@
+form {
+    width: 600px;
+    position: relative;
+}
+
+.grid_container {
+    grid-template-columns: 230px auto;
+    position: relative;
+}
+
+#old_password_div {
+    height: 46px;
+    width: 368px;
+    background-color: rgb(216, 216, 216);
+    border: 1px solid rgb(70, 70, 70);
+    border-radius: 2px;
+    margin: 0px;
+}
+
+#old_password_div:hover {
+    cursor: not-allowed;
+}
+
+.label {
+    margin: 0;
+    align-content: center;
+}
+
+.tooltip {
+    position: absolute;
+    left: 230px;
+}
+
+#incorrect_pw {
+    top: 30px;
+}
+
+#pw_mismatch {
+    top: 183px;
+}
+
+#pw_change_success {
+    top: 215px;
+}
+
+#incorrect_remove_pw {
+    top: 83px;
+}
+
+#pw_remove_success {
+    top: -48px;
+}
+
+input[type=submit] {
+    position: relative;
+    margin-top: 20px;
+    margin-left: 500px;
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 20px;
+}
+
+.toggle > input {
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: 0.15s;
+    border-radius: 10px;
+    background-color: grey;
+    border: 1px solid grey;
+}
+
+input:checked + .slider {
+    background-color: #3697c1;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    border-radius: 13px;
+    border: 1px solid grey;
+    left: -3px;
+    bottom: -3px;
+    background-color: white;
+    transition: 0.15s;
+    box-shadow: -1px 1px 3px black;
+}
+
+input:checked + .slider:before {
+    transform: translate(32px, 0);
+}
+
+body.dark #old_password_div {
+    background-color: rgb(10, 10, 10);
+    border-color: darkgrey;
+}
+
+@media (max-width: 620px) {
+    form {
+        width: 100%;
+        margin-bottom: 80px;
+    }
+
+    .grid_container {
+        grid-template-columns: auto;
+        row-gap: 5px;
+    }
+
+    input[type=submit] {
+        position: absolute;
+        margin-left: 0;
+        right: 0;
+    }
+
+    #old_password_div {
+        width: 100%;
+    }
+
+    .mobile_gap {
+        margin-top: 20px;
+    }
+
+    .tooltip {
+        position: absolute;
+        left: 0;
+    }
+
+    #incorrect_pw {
+        top: 63px;
+    }
+
+    #pw_mismatch, #pw_change_success {
+        top: 271px;
+    }
+
+    #incorrect_remove_pw {
+        top: 115px;
+    }
+
+    #pw_remove_success {
+        top: -96px;
+    }
+}
