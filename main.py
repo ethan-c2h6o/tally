@@ -11,6 +11,17 @@ DATA_FILE = 'data.json'
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret")
 
+if not os.path.exists(DATA_FILE):
+    with open(DATA_FILE, 'w') as f:
+        data = {
+            "Ethan Ryoo": {
+                "password": None,
+                "dark_mode": False,
+                "transactions": []
+            }
+        }
+        json.dump(data, f)
+
 def load_file(filename: str):
     with open(filename) as f:
         return json.load(f)
