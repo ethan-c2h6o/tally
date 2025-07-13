@@ -26,14 +26,14 @@ input[type=date] {
     cursor: pointer;
 }
 
-input[type='submit'] {
+input[type=submit] {
     border: none;
     border-radius: 10px;
     background-color: #3697c1;
     width: 100px;
 }
 
-input[type='submit']:hover {
+input[type=submit]:hover {
     background-color: #3188ae;
     cursor: pointer;
 }

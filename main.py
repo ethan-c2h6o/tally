@@ -450,6 +450,7 @@ def master():
     head = head_maker(PAGE_NAME, special_css=True)
     txn_form = txn_form_contents_maker()
     data  = load_file(DATA_FILE)
+
     if 'transaction_submit' in request.form:
         new_txn = {
             field: request.form[field]
@@ -461,6 +462,10 @@ def master():
             new_txn['desc'] = request.form['type'].capitalize()
         insert_transaction(data[request.form['user']]['transactions'], new_txn)
         write_file(DATA_FILE, data)
+    
+    elif 'edit_user_submit' in request.form:
+        return redirect(f'/edit/{request.form['edit_user']}')
+    
     elif 'new_user_submit' in request.form:
         name = (
             request.form['first_name'].strip().lower().title()
@@ -482,8 +487,15 @@ def master():
                 'transactions': []
             }
             write_file(DATA_FILE, data)
-    elif 'edit_user_submit' in request.form:
-        return redirect(f'/edit/{request.form['edit_user']}')
+    
+    elif 'data_file_submit' in request.form:
+        file = request.files.get('data_file')
+        if not file.filename.endswith('.json'):
+            return 'Invalid file type', 400
+        try:
+            write_file(DATA_FILE, json.load(file))
+        except Exception as e:
+            return f'Upload failed: {e}', 400
     
     response = p.html(
         p.head(head),
@@ -493,7 +505,7 @@ def master():
                 p.form(action='/master')(
                     p.h2('Add a transaction'),
                     p.div(id='transaction', _class='grid_container')(txn_form),
-                    p.input(type='submit', id='transaction_submit', name='transaction_submit')
+                    p.input(type='submit', id='transaction_submit', name='transaction_submit', value='Add')
                 ),
                 p.form(action='/master')(
                     p.h2('Edit a transaction'),
@@ -501,7 +513,7 @@ def master():
                         p.label(for_='edit_user')('Select a user:'),
                         p.select(id='edit_user', name='edit_user', required=True)(select_options_maker()),
                     ),
-                    p.input(type='submit', id='edit_user_submit', name='edit_user_submit')
+                    p.input(type='submit', id='edit_user_submit', name='edit_user_submit', value='Select')
                 ),
                 p.form(action='/master')(
                     p.h2('Add a new user'),
@@ -514,8 +526,16 @@ def master():
                         p.input(type='text', id='password', name='password')
                     ),
                     p.p(class_='tooltip')('This field may be left blank'),
-                    p.input(type='submit', id='new_user_submit', name='new_user_submit'),
+                    p.input(type='submit', id='new_user_submit', name='new_user_submit', value='Add'),
                     user_alr_exists
+                ),
+                p.form(action='/master')(
+                    p.h2('Replace server data'),
+                    p.input(type='file', name='data_file', accept='.json', required=True),
+                    p.input(
+                        type='submit', name='data_file_submit', value='Upload',
+                        onclick='return confirm("This will replace all server data. Continue?");'
+                    )
                 )
             )
         )
