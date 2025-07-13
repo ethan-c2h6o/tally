@@ -490,13 +490,15 @@ def master():
     
     elif 'data_file_submit' in request.form:
         file = request.files.get('data_file')
-        if not file or not file.filename.endswith('.json'):
+        if not file:
+            return 'No file selected', 400
+        if not file.filename.endswith('.json'):
             return 'Invalid file type', 400
         try:
             write_file(DATA_FILE, json.load(file))
         except Exception as e:
             return f'Upload failed: {e}', 400
-    
+
     response = p.html(
         p.head(head),
         p.body(class_='dark' if data[session['name']]['dark_mode'] else '')(
@@ -529,10 +531,9 @@ def master():
                     p.input(type='submit', id='new_user_submit', name='new_user_submit', value='Add'),
                     user_alr_exists
                 ),
-                p.form(action='/master')(
+                p.form(action='/master', enctype='multipart/form-data')(
                     p.h2('Replace server data'),
-                    p.input(type='file', name='data_file', accept='.json',
-                            enctype='multipart/form-data', required=True),
+                    p.input(type='file', name='data_file', accept='.json', required=True),
                     p.input(type='submit', name='data_file_submit', value='Upload',
                         onclick='return confirm("This will replace all server data. Continue?");')
                 )
