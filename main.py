@@ -490,7 +490,7 @@ def master():
     
     elif 'data_file_submit' in request.form:
         file = request.files.get('data_file')
-        if not file.filename.endswith('.json'):
+        if not file or not file.filename.endswith('.json'):
             return 'Invalid file type', 400
         try:
             write_file(DATA_FILE, json.load(file))
@@ -531,11 +531,10 @@ def master():
                 ),
                 p.form(action='/master')(
                     p.h2('Replace server data'),
-                    p.input(type='file', name='data_file', accept='.json', required=True),
-                    p.input(
-                        type='submit', name='data_file_submit', value='Upload',
-                        onclick='return confirm("This will replace all server data. Continue?");'
-                    )
+                    p.input(type='file', name='data_file', accept='.json',
+                            enctype='multipart/form-data', required=True),
+                    p.input(type='submit', name='data_file_submit', value='Upload',
+                        onclick='return confirm("This will replace all server data. Continue?");')
                 )
             )
         )
