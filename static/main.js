@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('search_input');
     const clearButton = document.getElementById('clear_button');
     if (input) {
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
         function filterByDescription() {
             const entries = document.querySelectorAll('[data-desc]');
             const query = input.value.trim().toLowerCase();
@@ -23,7 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let foundMatch = false;
             entries.forEach(entry => {
                 const desc = entry.getAttribute('data-desc');
-                if (desc.includes(query)) {
+                const textBox = entry.querySelector('.desc');
+                if (desc.toLowerCase().includes(query)) {
+                    const anyCaseQuery = new RegExp(`(${escapeRegExp(query)})`, 'gi');
+                    textBox.innerHTML = desc.replaceAll(
+                        anyCaseQuery, `<span class='highlight'>$1</span>`);
                     foundMatch = true;
                     entry.style.display = '';
                 } else {
@@ -52,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     descriptions.forEach(desc => {
         const cleaned = desc.textContent
             .split('\n')
+            .map(line => line.replace(/^ {10}/, ''))
             .map(line => line.replace(/^ {8}/, ''))
             .join('\n');
         desc.textContent = cleaned;

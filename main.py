@@ -145,10 +145,10 @@ def txn_rows_maker(txns: list, interactive: bool = False, user: str = None) -> l
     totals = []
     total = 0
     if interactive:
-        rows = [p.p('Select a transaction below to edit.')]
+        txn_rows = [p.p('Select a transaction below to edit.')]
     else:
-        rows = []
-    rows.extend([
+        txn_rows = []
+    txn_rows.extend([
         p.input(type='text', id='search_input', placeholder='Filter by description...'),
         p.button(type='button', id='clear_button')('Clear'),
         p.div(_class='grid_container header', id='txn_header')(
@@ -184,12 +184,12 @@ def txn_rows_maker(txns: list, interactive: bool = False, user: str = None) -> l
             )
         ]
         if interactive:
-            rows.append(p.button(
+            txn_rows.append(p.button(
                 _class=css_class, formaction=f'/edit/{user}/transaction_{i}',
-                **{'data-desc': desc.lower()})(content))
+                **{'data-desc': desc})(content))
         else:
-            rows.append(p.div(_class=css_class, **{'data-desc': desc.lower()})(content))
-    return rows
+            txn_rows.append(p.div(_class=css_class, **{'data-desc': desc})(content))
+    return txn_rows
 
 def compute_total_owing() -> float:
     data = load_file(DATA_FILE)
@@ -269,6 +269,9 @@ def redirect_page():
 
 @app.route('/login')
 def login():
+    if not invalid_login():
+        return redirect('/home')
+    
     PAGE_NAME = 'Login'
     head = head_maker(page_name=PAGE_NAME, special_css=True)
     message = p.p(class_='tooltip')('Leave blank if you haven\'t set a password')
@@ -297,11 +300,22 @@ def login():
     )
     return str(response)
 
+def invalid_login(master_acc_required = False):
+    if 'name' not in session:
+        return True
+    data = load_file(DATA_FILE)
+    if session['name'] not in data:
+        session.clear()
+        return True
+    if master_acc_required and session['name'] != 'Ethan Ryoo':
+        return True
+    return False
+
 @app.route('/home')
 def home():
-    if 'name' not in session:
+    if invalid_login():
         return redirect('/login')
-    
+
     PAGE_NAME = 'Home'
     total = compute_total_owing()
     description = 'owing'
@@ -328,7 +342,7 @@ def home():
 
 @app.route('/history')
 def history():
-    if 'name' not in session:
+    if invalid_login():
         return redirect('/login')
     
     PAGE_NAME = 'History'
@@ -357,7 +371,7 @@ def history():
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    if 'name' not in session:
+    if invalid_login():
         return redirect('/login')
 
     PAGE_NAME = 'Settings'
@@ -439,10 +453,8 @@ def settings():
 
 @app.route('/master', methods=['GET', 'POST'])
 def master():
-    if 'name' not in session:
+    if invalid_login(master_acc_required=True):
         return redirect('/login')
-    elif session['name'] != 'Ethan Ryoo':
-        return redirect('/')
     
     PAGE_NAME = 'Master'
     user_alr_exists = ''
@@ -544,10 +556,8 @@ def master():
 
 @app.route('/edit/<user>', methods=['GET', 'POST'])
 def edit(user):
-    if 'name' not in session:
+    if invalid_login(master_acc_required=True):
         return redirect('/login')
-    elif session['name'] != 'Ethan Ryoo':
-        return redirect('/')
     
     PAGE_NAME = 'Edit'
 
@@ -595,10 +605,9 @@ def edit(user):
 
 @app.route('/edit/<user>/transaction_<i>', methods=['GET', 'POST'])
 def edit_transaction(user, i):
-    if 'name' not in session:
+    if invalid_login(master_acc_required=True):
         return redirect('/login')
-    elif session['name'] != 'Ethan Ryoo':
-        return redirect('/')
+
     PAGE_NAME = 'Edit transaction'
     nav_bar = nav_bar_maker()
     head = head_maker(PAGE_NAME)
@@ -629,8 +638,6 @@ def edit_transaction(user, i):
 
 @app.route('/toggle_dark_mode', methods=['POST'])
 def toggle_dark_mode():
-    if 'name' not in session:
-        return 'Not logged in', 403
     data = load_file(DATA_FILE)
     data[session['name']]['dark_mode'] = not data[session['name']]['dark_mode']
     write_file(DATA_FILE, data)
